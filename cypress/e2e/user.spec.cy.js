@@ -16,6 +16,8 @@ describe("Orange HRM Tests", () => {
     dateCloseButton: ".--close",
     submitButton: "[type='submit']",
     toaster: ".oxd-toast-close",
+    dropdown: ".oxd-select-wrapper",
+    option: ".oxd-select-option"
   };
 
   it("Login - Success", () => {
@@ -36,6 +38,10 @@ describe("Orange HRM Tests", () => {
       .type("DriversLicenseNumberTest");
     cy.get(selectorsList.genericField).eq(6).clear().type("2025-03-10");
     cy.get(selectorsList.dateCloseButton).click();
+    cy.get(selectorsList.dropdown).eq(0).click()
+    cy.get(selectorsList.option).eq(129).click()
+    cy.get(selectorsList.dropdown).eq(1).click()
+    cy.get(selectorsList.option).eq(2).click()
     cy.get(selectorsList.genericField).eq(7).clear().type("2025-07-10");
     cy.get(selectorsList.dateCloseButton).click();
     cy.get(selectorsList.genericField).eq(8).clear().type("Test_FieldTest");
