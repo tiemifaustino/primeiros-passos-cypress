@@ -1,13 +1,15 @@
 import userData from "../fixtures/user-data.json";
+import LoginPage from "../pages/loginPage";
+import DashboardPage from "../pages/dashboardPage";
+
+const loginPage = new LoginPage();
+const dashboardPage = new DashboardPage();
+const { username, password } = userData.userSuccess;
 
 describe("Orange HRM Tests", () => {
   const selectorsList = {
-    usernameField: "[name='username']",
-    passwordField: "[name='password']",
-    loginButton: "[type='submit']",
     sectionTitleTopBar: ".oxd-topbar-header-breadcrumb-module",
     dashboardGrid: ".orangehrm-dashboard-grid",
-    wrongCredentialAlert: "[role='alert']",
     myInfoButton: "[href='/web/index.php/pim/viewMyDetails']",
     firstNameField: "[name='firstName']",
     lastName: "[name='lastName']",
@@ -17,16 +19,14 @@ describe("Orange HRM Tests", () => {
     submitButton: "[type='submit']",
     toaster: ".oxd-toast-close",
     genericDropdown: ".oxd-select-wrapper",
-    genericOption: ".oxd-select-option"
+    genericOption: ".oxd-select-option",
   };
 
-  it("Login - Success", () => {
-    cy.visit("/auth/login");
-    cy.get(selectorsList.usernameField).type(userData.userSuccess.username);
-    cy.get(selectorsList.passwordField).type(userData.userSuccess.password);
-    cy.get(selectorsList.loginButton).click();
-    cy.location("pathname").should("equal", "/web/index.php/dashboard/index");
-    cy.get(selectorsList.dashboardGrid);
+  it("User Info Update", () => {
+    loginPage.accessLoginPage();
+    loginPage.loginWithUser(username, password);
+    dashboardPage.verifyLocation();
+    dashboardPage.verifyDashboadGrid();
     cy.get(selectorsList.myInfoButton).click();
     cy.get(selectorsList.firstNameField).clear().type("FirstNameTest");
     cy.get(selectorsList.lastName).clear().type("LastNameTest");
@@ -38,10 +38,10 @@ describe("Orange HRM Tests", () => {
       .type("DriversLicenseNumberTest");
     cy.get(selectorsList.genericField).eq(6).clear().type("2025-03-10");
     cy.get(selectorsList.dateCloseButton).click();
-    cy.get(selectorsList.genericDropdown).eq(0).click()
-    cy.get(selectorsList.genericOption).eq(129).click()
-    cy.get(selectorsList.genericDropdown).eq(1).click()
-    cy.get(selectorsList.genericOption).eq(2).click()
+    cy.get(selectorsList.genericDropdown).eq(0).click();
+    cy.get(selectorsList.genericOption).eq(129).click();
+    cy.get(selectorsList.genericDropdown).eq(1).click();
+    cy.get(selectorsList.genericOption).eq(2).click();
     cy.get(selectorsList.genericField).eq(7).clear().type("2025-07-10");
     cy.get(selectorsList.dateCloseButton).click();
     cy.get(selectorsList.genericField).eq(8).clear().type("Test_FieldTest");
