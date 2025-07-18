@@ -1,0 +1,12 @@
+{
+  "fields": {
+    "firstName": "FirstNameTest",
+    "lastName": "LastNameTest",
+    "employeeId": "Employee",
+    "otherIdTest": "OtherIdTest",
+    "driversLicenseNumber": "DriversLicenseNumberTest",
+    "genericDateField6": "2025-03-10",
+    "genericDateField7": "2025-07-10",
+    "genericField8": "Test_FieldTest"
+  }
+}

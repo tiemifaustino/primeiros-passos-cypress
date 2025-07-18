@@ -6,11 +6,11 @@ class DashboardPage {
     return selectors;
   }
 
-  verifyLocation() {
+  checkLocation() {
     cy.location("pathname").should("equal", "/web/index.php/dashboard/index");
   }
 
-  verifyDashboadGrid(username, password) {
+  checkDashboadGrid(username, password) {
     cy.get(this.selectorsList().dashboardGrid);
   }
 }

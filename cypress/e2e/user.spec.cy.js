@@ -1,15 +1,15 @@
 import userData from "../fixtures/user-data.json";
 import LoginPage from "../pages/loginPage";
 import DashboardPage from "../pages/dashboardPage";
+import MenuPage from "../pages/menuPage";
 
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();
+const menuPage = new MenuPage();
 const { username, password } = userData.userSuccess;
 
 describe("Orange HRM Tests", () => {
   const selectorsList = {
-    sectionTitleTopBar: ".oxd-topbar-header-breadcrumb-module",
-    dashboardGrid: ".orangehrm-dashboard-grid",
     myInfoButton: "[href='/web/index.php/pim/viewMyDetails']",
     firstNameField: "[name='firstName']",
     lastName: "[name='lastName']",
@@ -24,10 +24,10 @@ describe("Orange HRM Tests", () => {
 
   it("User Info Update", () => {
     loginPage.accessLoginPage();
-    loginPage.loginWithUser(username, password);
-    dashboardPage.verifyLocation();
-    dashboardPage.verifyDashboadGrid();
-    cy.get(selectorsList.myInfoButton).click();
+    loginPage.loginWithAnyUser(username, password);
+    dashboardPage.checkLocation();
+    dashboardPage.checkDashboadGrid();
+    menuPage.accessMyInfo();
     cy.get(selectorsList.firstNameField).clear().type("FirstNameTest");
     cy.get(selectorsList.lastName).clear().type("LastNameTest");
     cy.get(selectorsList.genericField).eq(3).clear().type("Employee"); // para selecionar o elemento na posição 4 do array
