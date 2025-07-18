@@ -10,7 +10,7 @@ class DashboardPage {
     cy.location("pathname").should("equal", "/web/index.php/dashboard/index");
   }
 
-  checkDashboadGrid(username, password) {
+  checkDashboadGrid() {
     cy.get(this.selectorsList().dashboardGrid);
   }
 }

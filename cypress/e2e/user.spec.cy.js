@@ -1,12 +1,23 @@
 import userData from "../fixtures/user-data.json";
+import fieldsMyInfo from "../fixtures/fields-myinfo.json";
 import LoginPage from "../pages/loginPage";
 import DashboardPage from "../pages/dashboardPage";
 import MenuPage from "../pages/menuPage";
+import MyInfoPage from "../pages/myInfoPage";
 
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();
 const menuPage = new MenuPage();
+const myInfoPage = new MyInfoPage();
 const { username, password } = userData.userSuccess;
+const {
+  firstName,
+  lastName,
+  employeeId,
+  otherIdTest,
+  driversLicenseNumber,
+  licenseExpiryDate,
+} = fieldsMyInfo.fields;
 
 describe("Orange HRM Tests", () => {
   const selectorsList = {
@@ -28,16 +39,15 @@ describe("Orange HRM Tests", () => {
     dashboardPage.checkLocation();
     dashboardPage.checkDashboadGrid();
     menuPage.accessMyInfo();
-    cy.get(selectorsList.firstNameField).clear().type("FirstNameTest");
-    cy.get(selectorsList.lastName).clear().type("LastNameTest");
-    cy.get(selectorsList.genericField).eq(3).clear().type("Employee"); // para selecionar o elemento na posição 4 do array
-    cy.get(selectorsList.genericField).eq(4).clear().type("OtherIdTest");
-    cy.get(selectorsList.genericField)
-      .eq(5)
-      .clear()
-      .type("DriversLicenseNumberTest");
-    cy.get(selectorsList.genericField).eq(6).clear().type("2025-03-10");
-    cy.get(selectorsList.dateCloseButton).click();
+    myInfoPage.fillPersonalDetails(firstName, lastName);
+    myInfoPage.fillEmployeeDetails(
+      firstName,
+      lastName,
+      employeeId,
+      otherIdTest,
+      driversLicenseNumber,
+      licenseExpiryDate
+    );
     cy.get(selectorsList.genericDropdown).eq(0).click();
     cy.get(selectorsList.genericOption).eq(129).click();
     cy.get(selectorsList.genericDropdown).eq(1).click();
