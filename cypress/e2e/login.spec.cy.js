@@ -2,6 +2,9 @@ import userData from '../fixtures/user-data.json';
 import LoginPage from '../pages/loginPage';
 import DashboardPage from '../pages/dashboardPage';
 
+const Chance = require('chance');
+
+var chance = new Chance();
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();
 const { userSuccess, userFail } = userData;

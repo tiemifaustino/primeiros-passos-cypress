@@ -1,25 +1,24 @@
 import userData from '../fixtures/user-data.json';
-import fieldsMyInfo from '../fixtures/fields-myinfo.json';
 import LoginPage from '../pages/loginPage';
 import DashboardPage from '../pages/dashboardPage';
 import MenuPage from '../pages/menuPage';
 import MyInfoPage from '../pages/myInfoPage';
 
+const Chance = require('chance');
+const moment = require('moment');
+
+var chance = new Chance();
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();
 const menuPage = new MenuPage();
 const myInfoPage = new MyInfoPage();
 const { username, password } = userData.userSuccess;
-const {
-  firstName,
-  lastName,
-  employeeId,
-  otherIdTest,
-  driversLicenseNumber,
-  licenseExpiryDate,
-  dateOfBirth,
-  testField,
-} = fieldsMyInfo.fields;
+const anyLicenseExpiryDate = moment(chance.date({ string: true })).format(
+  'YYYY-DD-MM'
+);
+const anyDateofBirth = moment(chance.birthday({ string: true })).format(
+  'YYYY-DD-MM'
+);
 
 describe('Orange HRM Tests', () => {
   it('User Info Update', () => {
@@ -28,16 +27,16 @@ describe('Orange HRM Tests', () => {
     dashboardPage.checkLocation();
     dashboardPage.checkDashboadGrid();
     menuPage.accessMyInfo();
-    myInfoPage.fillPersonalDetails(firstName, lastName);
+    myInfoPage.fillPersonalDetails(chance.first(), chance.last());
     myInfoPage.fillEmployeeDetails(
-      employeeId,
-      otherIdTest,
-      driversLicenseNumber,
-      licenseExpiryDate
+      chance.integer({ min: 0, max: 9999999999 }),
+      chance.integer({ min: 0, max: 999999999999999 }),
+      chance.integer({ min: 0, max: 999999999 }),
+      anyLicenseExpiryDate
     );
-    myInfoPage.fillStatus(dateOfBirth);
+    myInfoPage.fillStatus(anyDateofBirth);
     myInfoPage.saveForm();
-    myInfoPage.fillCustomFields(testField);
+    myInfoPage.fillCustomFields(chance.string({ length: 20 }));
     myInfoPage.saveCustomFields();
   });
 });
