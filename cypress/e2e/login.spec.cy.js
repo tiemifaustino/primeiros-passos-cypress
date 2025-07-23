@@ -17,6 +17,6 @@ describe('Orange HRM Tests', () => {
   it('Login - Fail', () => {
     loginPage.accessLoginPage();
     loginPage.loginWithAnyUser(userFail.username, userFail.password);
-    loginPage.checkWrongCredentialAlert();
+    loginPage.checkAccessInvalid();
   });
 });
